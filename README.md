@@ -10,13 +10,9 @@ MirrorMaze is a captivating computer graphics mini-project that challenges playe
 
 2. Godot Configuration
 
-   i) Visit the official Godot Engine download page: https://godotengine.org/download/windows
+   - Download and install the Godot Engine from the official website: 'https://godotengine.org/download'
 
-   ii) Choose the stable version or a development version based on your preference.
-   
-   iii) Download the executable installer for your Windows version (32-bit or 64-bit).
-
-   iv)Run the downloaded installer.
+  
    
    
 
