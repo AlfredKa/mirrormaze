@@ -5,7 +5,7 @@ MirrorMaze is a captivating computer graphics mini-project that challenges playe
 ## Environment and Repository setup
 - Steps:
 
-1. Pycairo configuration. Refer to the [Pycairo Configuration] (https://zetcode.com/gfx/pycairo/)
+1. Pycairo configuration. Refer to the Pycairo Configuration (https://zetcode.com/gfx/pycairo/)
 
 
 2. Godot Configuration
