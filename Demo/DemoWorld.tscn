@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://0576fim4xnjw"]
+
+[ext_resource type="Script" path="res://Demo/MainCamera.gd" id="1"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_omm3q"]
+
+[sub_resource type="Sky" id="Sky_bigpx"]
+sky_material = SubResource("ProceduralSkyMaterial_omm3q")
+
+[sub_resource type="Environment" id="Environment_y6thg"]
+background_mode = 2
+sky = SubResource("Sky_bigpx")
+
+[sub_resource type="CapsuleMesh" id="7"]
+radius = 0.33
+height = 1.66
+
+[node name="DemoWorld" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_y6thg")
+
+[node name="Player" type="Node3D" parent="."]
+transform = Transform3D(0.733279, 0, -0.679928, 0, 1, 0, 0.679928, 0, 0.733279, -3.01042, 0.611678, 4.91543)
+script = ExtResource("1")
+
+[node name="CameraRod" type="Node3D" parent="Player"]
+
+[node name="MainCamera" type="Camera3D" parent="Player/CameraRod"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+near = 0.3
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Player/CameraRod"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)
+mesh = SubResource("7")
+skeleton = NodePath("../../..")
