@@ -1,18 +1,16 @@
-# Outline
+# Description
 
-MirrorMaze is a captivating computer graphics mini-project that challenges players to navigate through a complex maze using mirrors as their primary tool. The game is built using a Python-based game engine (Godot) and focuses on the unique concept of reflection to guide the player to the exit. 
+MirrorMaze is a game where players use mirrors to navigate through a challenging maze, without getting lost in the reflections. Developed using blender for character creation and Godot to create the maze and as the game engine.
+## Features
 
-## Environment and Repository setup
-- Steps:
+- Navigating through a maze with mirrors that to redirect the light
+- Use a blender designed character to explore the maze
 
-1. Pycairo configuration. Refer to the Pycairo Configuration (https://zetcode.com/gfx/pycairo/)
+## Installation
 
-
-2. Godot Configuration
-
-   - Download and install the Godot Engine from the official website: 'https://godotengine.org/download'
-
-  
+- Download the game files provided in the source
+- Install Godot engine: (https://godotengine.org/download/windows/)
+- Open project in godot and run.
    
    
 
