@@ -1,0 +1,386 @@
+[gd_scene load_steps=18 format=3 uid="uid://j0ek2acx3oot"]
+
+[ext_resource type="Texture2D" uid="uid://bweswyoiba0wx" path="res://skybox.jpg" id="1_dslj1"]
+[ext_resource type="Script" path="res://addons/Mirror/Mirror/Mirror.gd" id="1_khis0"]
+[ext_resource type="PackedScene" uid="uid://dp0bew8ilnj7l" path="res://playa.tscn" id="1_rku1e"]
+[ext_resource type="PackedScene" uid="uid://0576fim4xnjw" path="res://Demo/DemoWorld.tscn" id="2_k35lk"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_lnfyj"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_fenn5"]
+sky_material = SubResource("ProceduralSkyMaterial_lnfyj")
+
+[sub_resource type="Environment" id="Environment_rxyds"]
+background_mode = 2
+sky = SubResource("Sky_fenn5")
+ambient_light_color = Color(0.709804, 0.654902, 0.913725, 1)
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2m7xs"]
+albedo_texture = ExtResource("1_dslj1")
+uv1_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_632il"]
+size = Vector2(100, 100)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_p2vx4"]
+data = PackedVector3Array(5, 0, 5, -5, 0, 5, 5, 0, -5, -5, 0, 5, -5, 0, -5, 5, 0, -5)
+
+[sub_resource type="PrismMesh" id="PrismMesh_k1dbb"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_ar4yt"]
+data = PackedVector3Array(0, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0, 0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, -0.5, 0, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kqqjs"]
+albedo_color = Color(1, 0.356863, 1, 1)
+
+[sub_resource type="PrismMesh" id="PrismMesh_wvrwd"]
+left_to_right = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nvsdv"]
+albedo_color = Color(0.32549, 1, 1, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6sb32"]
+flip_faces = true
+size = Vector2(1, 1)
+orientation = 2
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_icd2p"]
+data = PackedVector3Array(-0.5, -0.5, 0, 0.5, -0.5, 0, 0.5, 0.5, 0, -0.5, 0.5, 0, -0.5, -0.5, 0, 0.5, 0.5, 0)
+
+[node name="Node3D" type="Node3D"]
+transform = Transform3D(2.24847, 0, 0, 0, 2.23248, 0, 0, 0, 1.2628, 0, 0, 0)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_rxyds")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.420545, -0.11974, 0.0812672, -0.0591666, 0.372156, 0.242162, -0.235483, 0.385703, -0.650286, 0, 0.0845041, 0.187379)
+shadow_enabled = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.414333, 0.498019)
+layers = 511
+material_override = SubResource("StandardMaterial3D_2m7xs")
+mesh = SubResource("PlaneMesh_632il")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+process_physics_priority = 154
+shape = SubResource("ConcavePolygonShape3D_p2vx4")
+
+[node name="mazeplan" type="CSGCombiner3D" parent="."]
+process_physics_priority = 154
+transform = Transform3D(4.5, 0, 0, 0, -4.5, -3.93402e-07, 0, 3.93402e-07, -4.5, 31.081, -0.150949, 36.8864)
+layers = 7
+use_collision = true
+collision_layer = 255
+collision_mask = 255
+
+[node name="template" type="CSGCombiner3D" parent="mazeplan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.377223, -0.300409, 1.30375)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="mazeplan/template"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.55396, 0, 6.6808)
+
+[node name="MeshInstance3D26" type="MeshInstance3D" parent="mazeplan/template"]
+process_physics_priority = 7
+transform = Transform3D(-7.49376e-08, -0.772581, -4.37113e-08, 0, -3.37706e-08, 0.999999, -1.71437, 3.37706e-08, 1.91068e-15, -7.3265, 0.0744408, 9.0925)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template/MeshInstance3D26"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template/MeshInstance3D26/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -1.42109e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="MeshInstance3D21" type="MeshInstance3D" parent="mazeplan/template"]
+process_physics_priority = 7
+transform = Transform3D(-7.49376e-08, 0.772581, 4.37114e-08, 0, -3.37705e-08, 0.999999, 1.71437, 3.37706e-08, 1.91069e-15, -7.32844, 0.0744408, 6.5222)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template/MeshInstance3D21"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template/MeshInstance3D21/StaticBody3D"]
+transform = Transform3D(1, 0, -1.05879e-22, 7.10543e-15, 1, -1.06581e-14, -2.11758e-22, -7.10543e-15, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="template2" type="CSGCombiner3D" parent="mazeplan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.14736, -0.300409, 0.344578)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="mazeplan/template2"]
+
+[node name="MeshInstance3D30" type="MeshInstance3D" parent="mazeplan/template2"]
+process_physics_priority = 7
+transform = Transform3D(-0.00768987, -0.772573, -4.4103e-08, -1.63425e-12, -3.40735e-08, 0.999999, -1.71435, 0.00346543, 1.96948e-10, -7.2773, 0.0744408, 2.7024)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template2/MeshInstance3D30"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template2/MeshInstance3D30/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -1.42109e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="MeshInstance3D20" type="MeshInstance3D" parent="mazeplan/template2"]
+process_physics_priority = 7
+transform = Transform3D(-7.49376e-08, 0.772581, 4.37114e-08, 0, -3.37705e-08, 0.999999, 1.71437, 3.37706e-08, 1.91069e-15, -7.32844, 0.0744408, 8.38749)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template2/MeshInstance3D20"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template2/MeshInstance3D20/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -1.42109e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="MeshInstance3D22" type="MeshInstance3D" parent="mazeplan/template2"]
+process_physics_priority = 7
+transform = Transform3D(-7.49376e-08, 0.772581, 4.37114e-08, 0, -3.37705e-08, 0.999999, 1.71437, 3.37706e-08, 1.91069e-15, -7.32844, 0.0744408, 5.07434)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template2/MeshInstance3D22"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template2/MeshInstance3D22/StaticBody3D"]
+transform = Transform3D(1, 1.77636e-15, -1.05879e-22, 0, 1, -1.06581e-14, -4.23516e-22, -7.10543e-15, 1, -0.0926559, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="Mirror" type="Node3D" parent="mazeplan/template2"]
+transform = Transform3D(-3.14722e-08, -4.19629e-08, 1, 6.29444e-08, 0.48, 8.74228e-08, -0.72, 4.19629e-08, -4.37114e-08, -7.90661, -0.0995413, 8.62281)
+script = ExtResource("1_khis0")
+size = Vector2(1, 1)
+
+[node name="template3" type="CSGCombiner3D" parent="mazeplan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.388858, -0.300409, 0.344578)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="mazeplan/template3"]
+
+[node name="MeshInstance3D28" type="MeshInstance3D" parent="mazeplan/template3"]
+process_physics_priority = 7
+transform = Transform3D(-7.49376e-08, -0.772581, -4.37113e-08, 0, -3.37706e-08, 0.999999, -1.71437, 3.37706e-08, 1.91068e-15, -7.3265, 0.0744408, 5.92024)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template3/MeshInstance3D28"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template3/MeshInstance3D28/StaticBody3D"]
+transform = Transform3D(0.999999, -5.32907e-15, 1.69407e-21, 1.98952e-13, 1, 1.10134e-13, -2.75286e-21, -2.4869e-14, 1, 8.6826, 23.4684, 1.10515)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="MeshInstance3D29" type="MeshInstance3D" parent="mazeplan/template3"]
+process_physics_priority = 7
+transform = Transform3D(-7.49376e-08, -0.772581, -4.37113e-08, 0, -3.37706e-08, 0.999999, -1.71437, 3.37706e-08, 1.91068e-15, -7.3265, 0.0744408, 4.23621)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template3/MeshInstance3D29"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template3/MeshInstance3D29/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -1.42109e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="MeshInstance3D19" type="MeshInstance3D" parent="mazeplan/template3"]
+process_physics_priority = 7
+transform = Transform3D(-7.49376e-08, 0.772581, 4.37114e-08, 0, -3.37705e-08, 0.999999, 1.71437, 3.37706e-08, 1.91069e-15, -7.32844, 0.0744408, 10.0668)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template3/MeshInstance3D19"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template3/MeshInstance3D19/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -1.42109e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="template4" type="CSGCombiner3D" parent="mazeplan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.19537, -0.300409, 1.01105)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="mazeplan/template4"]
+
+[node name="MeshInstance3D25" type="MeshInstance3D" parent="mazeplan/template4"]
+process_physics_priority = 7
+transform = Transform3D(-7.49376e-08, -0.772581, -4.37113e-08, 0, -3.37706e-08, 0.999999, -1.71437, 3.37706e-08, 1.91068e-15, -7.34621, 0.0744408, 10.8884)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template4/MeshInstance3D25"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template4/MeshInstance3D25/StaticBody3D"]
+transform = Transform3D(1, 0, 1.05879e-22, 2.13163e-14, 1, -1.42109e-14, -2.11758e-22, -1.06581e-14, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="MeshInstance3D27" type="MeshInstance3D" parent="mazeplan/template4"]
+process_physics_priority = 7
+transform = Transform3D(-7.35518e-08, -0.772581, -4.37113e-08, 0, -3.37706e-08, 0.999999, -1.68267, 3.37706e-08, 1.91068e-15, -7.3265, 0.0744409, 7.65044)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template4/MeshInstance3D27"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template4/MeshInstance3D27/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -1.42109e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="MeshInstance3D29" type="MeshInstance3D" parent="mazeplan/template4"]
+process_physics_priority = 7
+transform = Transform3D(-7.49376e-08, -0.772581, -4.37113e-08, 0, -3.37706e-08, 0.999999, -1.71437, 3.37706e-08, 1.91068e-15, -7.38058, 0.0744409, 4.37433)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template4/MeshInstance3D29"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template4/MeshInstance3D29/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -1.42109e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="template5" type="CSGCombiner3D" parent="mazeplan"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.95134, -0.300409, 0.344578)
+material_override = SubResource("StandardMaterial3D_kqqjs")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="mazeplan/template5"]
+
+[node name="MeshInstance3D18" type="MeshInstance3D" parent="mazeplan/template5"]
+process_physics_priority = 7
+transform = Transform3D(-7.49376e-08, 0.772581, 4.37114e-08, 0, -3.37705e-08, 0.999999, 1.71437, 3.37706e-08, 1.91068e-15, -7.32844, 0.0744408, 11.5456)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template5/MeshInstance3D18"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template5/MeshInstance3D18/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -1.42109e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="MeshInstance3D20" type="MeshInstance3D" parent="mazeplan/template5"]
+process_physics_priority = 7
+transform = Transform3D(-7.49376e-08, 0.772581, 4.37114e-08, 0, -3.37705e-08, 0.999999, 1.71437, 3.37706e-08, 1.91068e-15, -7.32844, 0.0744408, 8.31572)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template5/MeshInstance3D20"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template5/MeshInstance3D20/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -1.42109e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="MeshInstance3D23" type="MeshInstance3D" parent="mazeplan/template5"]
+process_physics_priority = 7
+transform = Transform3D(-7.49376e-08, 0.772581, 4.37114e-08, 0, -3.37705e-08, 0.999999, 1.71437, 3.37706e-08, 1.91069e-15, -7.38477, 0.0744409, 3.36465)
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template5/MeshInstance3D23"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template5/MeshInstance3D23/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -1.42109e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="MeshInstance3D24" type="MeshInstance3D" parent="mazeplan/template5"]
+process_physics_priority = 7
+transform = Transform3D(-1.31699, -0.0158222, 6.68411e-08, 1.18161e-07, -7.99904e-08, 0.774881, -0.0341646, 0.60992, 1.03359e-07, -9.37967, -0.0204287, 2.08055)
+layers = 255
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template5/MeshInstance3D24"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template5/MeshInstance3D24/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -1.42109e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="MeshInstance3D25" type="MeshInstance3D" parent="mazeplan/template5"]
+process_physics_priority = 7
+transform = Transform3D(1.42686, 0, 0, 0, -2.67329e-08, 0.999999, 0, -0.611576, -4.37114e-08, -9.22152, 0.0946235, 12.2944)
+layers = 255
+mesh = SubResource("PrismMesh_k1dbb")
+skeleton = NodePath("../..")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mazeplan/template5/MeshInstance3D25"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mazeplan/template5/MeshInstance3D25/StaticBody3D"]
+transform = Transform3D(1, 0, 0, 1.42109e-14, 1, -1.42109e-14, 0, -1.06581e-14, 1, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_ar4yt")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="mazeplan/template5"]
+transform = Transform3D(-0.851077, 3.5062e-08, 3.43384e-15, 8.47033e-22, -1.75309e-08, 0.898588, 7.44035e-08, 0.401062, 3.92785e-08, -8.34733, 0.0659453, 1.96368)
+mesh = SubResource("PrismMesh_wvrwd")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="mazeplan/template5"]
+transform = Transform3D(0.851077, 0, 0, 0, -1.7531e-08, -0.898588, 0, 0.401062, -3.92785e-08, -8.88942, 0.0659443, 12.8318)
+mesh = SubResource("PrismMesh_wvrwd")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="mazeplan/template5"]
+transform = Transform3D(-4.01903e-08, 0.728541, 4.68922e-08, 1.42109e-13, -3.18455e-08, 1.07277, 0.919447, 3.18455e-08, 0, -10.3554, 0.121995, 2.23693)
+mesh = SubResource("PrismMesh_wvrwd")
+
+[node name="Mirror" type="Node3D" parent="."]
+transform = Transform3D(1.74013, 0, -0.0661533, 0, 1.9027, 0, 1.89902, 0, 0.0606183, 3.55797, 1.34379, 36.427)
+script = ExtResource("1_khis0")
+MirrorDistortion = 2
+
+[node name="DemoWorld" parent="." instance=ExtResource("2_k35lk")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -21.2071, 0.531966, 14.9016)
+
+[node name="playa" parent="." instance=ExtResource("1_rku1e")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -19.4441, 0.818158, 9.84231)
+
+[node name="mirrorplanetemplate" type="MeshInstance3D" parent="."]
+transform = Transform3D(-3.37219e-07, 0, -4.49999, 0, 3.47661, 0, 7.71467, 0, -1.96701e-07, -9.10805, 1.38773, 12.7308)
+material_override = SubResource("StandardMaterial3D_nvsdv")
+mesh = SubResource("PlaneMesh_6sb32")
+skeleton = NodePath("")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="mirrorplanetemplate"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="mirrorplanetemplate/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_icd2p")
+
+[node name="Mirror2" type="Node3D" parent="mirrorplanetemplate"]
+transform = Transform3D(-4.53281e-09, 0.129623, -5.666e-09, 0.230109, 1.2573e-08, 1.2573e-08, 7.77092e-09, -9.71363e-09, -0.222223, 0.3722, -0.280774, -0.000176474)
+script = ExtResource("1_khis0")
+
+[node name="Mirror8" type="Node3D" parent="mirrorplanetemplate"]
+transform = Transform3D(-5.43937e-09, 0.129623, -5.666e-09, 0.276131, 1.2573e-08, 1.2573e-08, 9.32511e-09, -9.71363e-09, -0.222222, 0.3722, 0.222589, -0.000176467)
+script = ExtResource("1_khis0")
+
+[node name="Mirror9" type="Node3D" parent="mirrorplanetemplate"]
+transform = Transform3D(-5.43937e-09, 0.129623, -5.666e-09, 0.276131, 1.2573e-08, 1.2573e-08, 9.32511e-09, -9.71363e-09, -0.222223, 0.166877, 0.222589, -0.00017643)
+script = ExtResource("1_khis0")
+
+[node name="Mirror10" type="Node3D" parent="mirrorplanetemplate"]
+transform = Transform3D(-5.43937e-09, 0.129623, -5.666e-09, 0.276131, 1.2573e-08, 1.2573e-08, 9.32511e-09, -9.71363e-09, -0.222223, -0.0384464, 0.222589, -0.0001764)
+script = ExtResource("1_khis0")
+
+[node name="Mirror11" type="Node3D" parent="mirrorplanetemplate"]
+transform = Transform3D(-5.43937e-09, 0.129623, -5.666e-09, 0.276131, 1.2573e-08, 1.2573e-08, 9.32511e-09, -9.71363e-09, -0.222223, -0.243639, 0.222589, -0.00017637)
+script = ExtResource("1_khis0")
+
+[node name="Mirror3" type="Node3D" parent="mirrorplanetemplate"]
+transform = Transform3D(-4.53281e-09, 0.129623, -5.666e-09, 0.230109, 1.2573e-08, 1.2573e-08, 7.77092e-09, -9.71363e-09, -0.222223, 0.166905, -0.280774, -0.00017646)
+script = ExtResource("1_khis0")
+
+[node name="Mirror4" type="Node3D" parent="mirrorplanetemplate"]
+transform = Transform3D(-4.53281e-09, 0.129623, -5.666e-09, 0.230109, 1.2573e-08, 1.2573e-08, 7.77092e-09, -9.71363e-09, -0.222223, -0.0383902, -0.280774, -0.000176452)
+script = ExtResource("1_khis0")
+
+[node name="Mirror5" type="Node3D" parent="mirrorplanetemplate"]
+transform = Transform3D(-4.53281e-09, 0.129623, -5.666e-09, 0.230109, 1.2573e-08, 1.2573e-08, 7.77092e-09, -9.71363e-09, -0.222223, -0.243685, -0.280774, -0.000176437)
+script = ExtResource("1_khis0")
+
+[node name="Mirror6" type="Node3D" parent="mirrorplanetemplate"]
+transform = Transform3D(-4.53281e-09, 0.129623, -5.666e-09, 0.230109, 1.2573e-08, 1.2573e-08, 7.77092e-09, -9.71363e-09, -0.222223, -0.448979, -0.280774, -0.000176437)
+script = ExtResource("1_khis0")
+
+[node name="Mirror7" type="Node3D" parent="mirrorplanetemplate"]
+transform = Transform3D(-5.43937e-09, 0.129623, -5.666e-09, 0.276131, 1.2573e-08, 1.2573e-08, 9.32511e-09, -9.71363e-09, -0.222223, -0.448963, 0.222589, -0.000176348)
+script = ExtResource("1_khis0")
+
+[node name="Mirror2" type="Node3D" parent="."]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -9.78443, 0.895865, 5.54324)
+script = ExtResource("1_khis0")

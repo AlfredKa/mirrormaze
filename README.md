@@ -1,3 +1,6 @@
+develop
+
+=======
 ## Description
 
 MirrorMaze is a game where players use mirrors to navigate through a challenging maze, without getting lost in the reflections. Developed using blender for character creation and Godot to create the maze and as the game engine.
@@ -26,3 +29,4 @@ MirrorMaze is a game where players use mirrors to navigate through a challenging
 
      
  
+ main
